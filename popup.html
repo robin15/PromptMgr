@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>追加</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 300px;
+      padding: 10px;
+    }
+    input[type="text"], textarea, input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    textarea {
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h2>プロンプトを追加</h2>
+  <form id="addTextForm">
+    <input type="text" id="newMenuItemSummary" placeholder="要約を入力" required>
+    <textarea id="newMenuItemContent" placeholder="プロンプトを入力" required></textarea>
+    <input type="submit" value="追加">
+  </form>
+  <script src="popup.js"></script>
+</body>
+</html>
