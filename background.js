@@ -27,7 +27,6 @@ chrome.runtime.onInstalled.addListener(() => {
       ];
   
       chrome.storage.sync.set({ customMenuItems: initialMenuItems }, () => {
-        // 初期データからカスタムメニュー項目を作成
         initialMenuItems.forEach(item => {
           chrome.contextMenus.create({
             id: item.id,
@@ -69,6 +68,10 @@ chrome.runtime.onInstalled.addListener(() => {
           target: { tabId: tab.id },
           function: insertTextIntoFocusedElement,
           args: [item.content]
+        }).catch((error) => {
+          console.error("Script execution failed: ", error);
+          // フォールバック: コマンドを送信してテキストを挿入
+          chrome.tabs.sendMessage(tab.id, { action: "insertText", text: item.content });
         });
       }
     });
@@ -78,6 +81,14 @@ chrome.runtime.onInstalled.addListener(() => {
     const focusedElement = document.activeElement;
     if (focusedElement && (focusedElement.tagName === 'INPUT' || focusedElement.tagName === 'TEXTAREA')) {
       focusedElement.value += text;
+    } else if (document.execCommand) {
+      document.execCommand('insertText', false, text);
     }
   }
   
+  // メッセージリスナーを追加して、バックグラウンドからのメッセージを受信
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "insertText") {
+      insertTextIntoFocusedElement(request.text);
+    }
+  });
