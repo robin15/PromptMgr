@@ -1,7 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "プロンプト管理",
+    "name": "LLMプロンプトテンプレート",
     "version": "1.0",
+    "description": "LLMプロンプトのテンプレートを挿入するツールです。",
     "permissions": [
       "contextMenus",
       "activeTab",
