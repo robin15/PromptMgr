@@ -1,31 +1,22 @@
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.removeAll(() => {
-      // 最上位のプロンプト挿入メニューを作成
-      chrome.contextMenus.create({
-        id: "promptInsertion",
-        title: "挿入",
-        contexts: ["editable"]
-      });
-  
-      // 最上位のプロンプト管理メニューを作成
-      chrome.contextMenus.create({
-        id: "promptManagement",
-        title: "管理",
-        contexts: ["all"]
-      });
-  
-      // プロンプト管理の下に追加と削除の項目を作成
+
       chrome.contextMenus.create({
         id: "addText",
-        parentId: "promptManagement",
         title: "追加",
         contexts: ["all"]
       });
+
       chrome.contextMenus.create({
         id: "removeText",
-        parentId: "promptManagement",
         title: "削除",
         contexts: ["editable"]
+      });
+
+      chrome.contextMenus.create({
+        id: "separator-1",
+        type: "separator",
+        contexts: ["all"]
       });
   
       // 初期データを設定
@@ -40,7 +31,6 @@ chrome.runtime.onInstalled.addListener(() => {
         initialMenuItems.forEach(item => {
           chrome.contextMenus.create({
             id: item.id,
-            parentId: "promptInsertion",
             title: item.title,
             contexts: ["editable"]
           });

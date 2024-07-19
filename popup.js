@@ -13,7 +13,6 @@ document.getElementById("addTextForm").addEventListener("submit", function(event
         // コンテキストメニューに項目を追加
         chrome.contextMenus.create({
           id,
-          parentId: "promptInsertion",
           title: summary,
           contexts: ["editable"]
         });
