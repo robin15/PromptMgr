@@ -42,7 +42,7 @@ chrome.runtime.onInstalled.addListener(() => {
     if (info.menuItemId === "addText") {
       // ポップアップを新しいウィンドウとして表示
       chrome.windows.create({
-        url: chrome.runtime.getURL("popup.html"),
+        url: chrome.runtime.getURL("add.html"),
         type: "popup",
         width: 400,
         height: 300
