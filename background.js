@@ -3,13 +3,13 @@ chrome.runtime.onInstalled.addListener(() => {
 
       chrome.contextMenus.create({
         id: "addText",
-        title: "追加",
+        title: "テンプレート追加",
         contexts: ["all"]
       });
 
       chrome.contextMenus.create({
         id: "removeText",
-        title: "削除",
+        title: "テンプレート削除",
         contexts: ["editable"]
       });
 
@@ -17,13 +17,6 @@ chrome.runtime.onInstalled.addListener(() => {
         id: "separator-1",
         type: "separator",
         contexts: ["all"]
-      });
-  
-      chrome.contextMenus.create({
-        id: "fixedLabel",
-        title: "テンプレート",
-        contexts: ["all"],
-        enabled: false
       });
 
       // 初期データを設定
