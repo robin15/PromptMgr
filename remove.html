@@ -2,26 +2,27 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>削除</title>
+  <title>テンプレート削除</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      width: 300px;
-      padding: 10px;
+      margin: 20px;
     }
-    select, input[type="submit"] {
-      width: 100%;
-      padding: 10px;
+    #templateList {
+      list-style: none;
+      padding: 0;
+    }
+    #templateList li {
       margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <h2>プロンプトを削除</h2>
-  <form id="removeTextForm">
-    <select id="menuItemsList" required></select>
-    <input type="submit" value="削除">
+  <h1>テンプレート削除</h1>
+  <form id="removeForm">
+    <ul id="templateList"></ul>
+    <button type="submit">削除</button>
   </form>
-  <script src="remove.js"></script>
+  <script type="module" src="remove.js"></script>
 </body>
 </html>

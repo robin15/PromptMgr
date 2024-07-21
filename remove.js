@@ -1,33 +1,37 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const menuItemsList = document.getElementById("menuItemsList");
+document.addEventListener('DOMContentLoaded', () => {
+  const templateList = document.getElementById('templateList');
   
-    // ストレージからカスタムメニュー項目を読み込む
-    chrome.storage.sync.get("customMenuItems", (data) => {
-      const customMenuItems = data.customMenuItems || [];
-      customMenuItems.forEach(item => {
-        const option = document.createElement("option");
-        option.value = item.id;
-        option.textContent = item.title;
-        menuItemsList.appendChild(option);
-      });
+  // テンプレートのリストを取得して表示
+  chrome.storage.sync.get('customMenuItems', (data) => {
+    const customMenuItems = data.customMenuItems || [];
+    customMenuItems.forEach((item, index) => {
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `
+        <label>
+          <input type="checkbox" name="templatesToRemove" value="${item.id}">
+          ${item.title}
+        </label>
+      `;
+      templateList.appendChild(listItem);
     });
-  
-    document.getElementById("removeTextForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-  
-      const selectedId = menuItemsList.value;
-  
-      // ストレージから選択された項目を削除
-      chrome.storage.sync.get("customMenuItems", (data) => {
-        let customMenuItems = data.customMenuItems || [];
-        customMenuItems = customMenuItems.filter(item => item.id !== selectedId);
-        chrome.storage.sync.set({ customMenuItems }, () => {
-          // コンテキストメニューから項目を削除
-          chrome.contextMenus.remove(selectedId, () => {
-            window.close(); // ポップアップを閉じる
-          });
+  });
+
+  // フォームの送信処理
+  document.getElementById('removeForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const checkedBoxes = document.querySelectorAll('input[name="templatesToRemove"]:checked');
+    const idsToRemove = Array.from(checkedBoxes).map(box => box.value);
+
+    chrome.storage.sync.get('customMenuItems', (data) => {
+      const customMenuItems = data.customMenuItems || [];
+      const updatedMenuItems = customMenuItems.filter(item => !idsToRemove.includes(item.id));
+
+      chrome.storage.sync.set({ customMenuItems: updatedMenuItems }, () => {
+        // メニューを再作成
+        chrome.runtime.sendMessage({ action: "createContextMenu" }, () => {
+          window.close();
         });
       });
     });
   });
-  
+});
