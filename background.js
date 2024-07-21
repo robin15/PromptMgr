@@ -45,7 +45,7 @@ chrome.runtime.onInstalled.addListener(() => {
         url: chrome.runtime.getURL("add.html"),
         type: "popup",
         width: 400,
-        height: 300
+        height: 380
       });
       return;
     }
