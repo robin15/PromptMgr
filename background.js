@@ -10,13 +10,13 @@ chrome.runtime.onInstalled.addListener(() => {
       chrome.contextMenus.create({
         id: "removeText",
         title: "テンプレート削除",
-        contexts: ["editable"]
+        contexts: ["all"]
       });
 
       chrome.contextMenus.create({
         id: "separator-1",
         type: "separator",
-        contexts: ["all"]
+        contexts: ["editable"]
       });
 
       // 初期データを設定
